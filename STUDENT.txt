@@ -1,5 +1,7 @@
 Nama: Marshall Manurung
+Username Dicoding: marshall_real01
 Email: marshallmanurung92@gmail.com
 API key: Tidak diperlukan karena aplikasi menggunakan OpenStreetMap.
 
-URL Deployment: GANTI_DENGAN_URL_DEPLOYMENT
+URL Deployment:
+https://agent-6aafcfeb193c47d61e80fa64--ceritak.netlify.app/

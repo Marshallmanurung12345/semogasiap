@@ -1,4 +1,5 @@
 import CONFIG from "../config";
+import { deletePendingStory, getPendingStories } from "./db";
 
 const request = async (path, options = {}) => {
   let response;
@@ -47,4 +48,13 @@ export const addStory = ({ description, photo, lat, lon }) => {
   if (lat !== "") body.append("lat", lat);
   if (lon !== "") body.append("lon", lon);
   return request("/stories", { method: "POST", headers: authHeaders(), body });
+};
+
+export const syncPendingStories = async () => {
+  const pendingStories = await getPendingStories();
+  for (const story of pendingStories) {
+    await addStory(story);
+    await deletePendingStory(story.id);
+  }
+  return pendingStories.length;
 };

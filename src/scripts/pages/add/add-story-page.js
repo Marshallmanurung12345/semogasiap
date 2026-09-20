@@ -1,4 +1,5 @@
 import { addStory } from "../../data/api";
+import { queueStory } from "../../data/db";
 import { go, setMessage } from "../../utils";
 import "../../components/loading";
 
@@ -94,7 +95,23 @@ const AddStoryPage = {
         setMessage("Cerita berhasil dipublikasikan.", "success");
         setTimeout(() => go("/home"), 700);
       } catch (error) {
-        setMessage(error.message, "error");
+        if (!navigator.onLine) {
+          await queueStory({
+            id: `pending-${Date.now()}`,
+            description: description.value.trim(),
+            photo: form.photo.files[0],
+            lat: form.lat.value,
+            lon: form.lon.value,
+            createdAt: new Date().toISOString(),
+          });
+          setMessage(
+            "Kamu sedang offline. Cerita disimpan dan akan dikirim saat online kembali.",
+            "success",
+          );
+          setTimeout(() => go("/home"), 900);
+        } else {
+          setMessage(error.message, "error");
+        }
       } finally {
         button.disabled = false;
         button.textContent = "Publikasikan cerita";
