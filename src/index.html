@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Cerita Kita - aplikasi berbagi cerita berbasis Story API"
+    />
+    <title>Cerita Kita</title>
+    <meta name="theme-color" content="#c45f3d" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+    <header class="semantic-header"><span class="sr-only">Cerita Kita</span></header>
+    <main id="main-content" tabindex="-1"><div id="app"></div></main>
+    <script>
+      document.addEventListener("click", (event) => {
+        const link = event.target.closest(".skip-link");
+        if (!link) return;
+        const target = document.querySelector("#main-content");
+        if (!target) return;
+        event.preventDefault();
+        target.focus({ preventScroll: true });
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    </script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+Nama: Marshall Manurung
+Email: marshallmanurung92@gmail.com
+API key: Tidak diperlukan karena aplikasi menggunakan OpenStreetMap.
+
+URL Deployment: GANTI_DENGAN_URL_DEPLOYMENT
