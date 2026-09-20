@@ -12,17 +12,7 @@ const authHeaders = () => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
-export const getVapidPublicKey = async () => {
-  const response = await fetch(
-    `${CONFIG.BASE_URL}/notifications/vapid-public-key`,
-    {
-      headers: authHeaders(),
-    },
-  );
-  if (!response.ok) throw new Error("VAPID public key tidak dapat diperoleh.");
-  const data = await response.json();
-  return data.vapidPublicKey || data.publicKey || data.vapidPublicKey;
-};
+export const getVapidPublicKey = async () => CONFIG.VAPID_PUBLIC_KEY;
 
 export const subscribePush = async () => {
   if (
@@ -51,7 +41,10 @@ export const subscribePush = async () => {
   const response = await fetch(`${CONFIG.BASE_URL}/notifications/subscribe`, {
     method: "POST",
     headers: { "Content-Type": "application/json", ...authHeaders() },
-    body: JSON.stringify(subscription.toJSON()),
+    body: JSON.stringify({
+      endpoint: subscription.endpoint,
+      keys: subscription.toJSON().keys,
+    }),
   });
   if (!response.ok)
     throw new Error("Langganan push notification gagal disimpan.");
@@ -67,7 +60,7 @@ export const unsubscribePush = async () => {
   const response = await fetch(`${CONFIG.BASE_URL}/notifications/subscribe`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json", ...authHeaders() },
-    body: JSON.stringify(subscription.toJSON()),
+    body: JSON.stringify({ endpoint: subscription.endpoint }),
   });
   if (!response.ok)
     throw new Error("Langganan push notification gagal dihentikan.");

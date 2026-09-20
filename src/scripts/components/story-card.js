@@ -13,6 +13,7 @@ class StoryCard extends HTMLElement {
     if (!this._story) return;
     const s = this._story;
     const saved = Boolean(this._saved);
+    this.dataset.id = s.id;
     this.innerHTML = `<article class="story-card" tabindex="0" data-id="${escapeHtml(s.id)}" role="link" aria-label="Buka detail cerita">
       <img src="${escapeHtml(s.photoUrl)}" alt="Foto cerita oleh ${escapeHtml(s.name || "Pengguna")}" loading="lazy">
       <div class="story-card__body"><p class="eyebrow">${escapeHtml(s.name || "Pengguna")}</p>
